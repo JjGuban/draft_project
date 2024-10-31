@@ -44,9 +44,10 @@ function deleteUser($user_id) {
 // Create manga listing
 function createManga($title, $genre, $author, $price, $user_id) {
     global $conn;
-    $stmt = $conn->prepare("INSERT INTO manga (title, genre, author, price, user_id) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO manga (title, genre, author, price, user_id, added_by) VALUES (?, ?, ?, ?, ?, NOW())");
     $stmt->execute([trim($title), trim($genre), trim($author), $price, $user_id]);
 }
+
 
 // Get manga by ID for details display
 function getMangaById($manga_id) {
@@ -56,12 +57,14 @@ function getMangaById($manga_id) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+
 // Update manga information
 function updateManga($manga_id, $title, $genre, $author, $price) {
     global $conn;
-    $stmt = $conn->prepare("UPDATE manga SET title = ?, genre = ?, author = ?, price = ? WHERE manga_id = ?");
+    $stmt = $conn->prepare("UPDATE manga SET title = ?, genre = ?, author = ?, price = ?, last_updated = NOW() WHERE manga_id = ?");
     $stmt->execute([trim($title), trim($genre), trim($author), $price, $manga_id]);
 }
+
 
 // Delete manga listing
 function deleteManga($manga_id) {
@@ -70,10 +73,16 @@ function deleteManga($manga_id) {
     $stmt->execute([$manga_id]);
 }
 
-// Get all manga listings for dashboard display
-function getAllManga() {
+// Fetch all mangas with uploader's username
+function getAllMangas() {
     global $conn;
-    $stmt = $conn->query("SELECT * FROM manga");
+    $stmt = $conn->prepare("
+        SELECT manga.*, users.username
+        FROM manga
+        JOIN users ON manga.user_id = users.user_id
+        ORDER BY manga.added_by DESC
+    ");
+    $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -87,7 +96,7 @@ function createPurchase($user_id, $manga_id) {
 // Get user purchases
 function getUserPurchases($user_id) {
     global $conn;
-    $stmt = $conn->prepare("SELECT p.purchase_id, m.title, m.author, m.genre, m.price FROM purchases p JOIN manga m ON p.manga_id = m.manga_id WHERE p.user_id = ?");
+    $stmt = $conn->prepare("SELECT p.purchase_id, m.title, m.author, m.genre, m.price, p.purchase_date FROM purchases p JOIN manga m ON p.manga_id = m.manga_id WHERE p.user_id = ?");
     $stmt->execute([$user_id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

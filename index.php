@@ -14,42 +14,50 @@ if (isset($_SESSION['user_id'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Mang Store</title>
+    <title>141 Manga Store - Login</title>
     <style>
-        /* General Styles */
+        /* Background Styling */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-image: linear-gradient(to right, #111111, #333333);
+            color: #f4f4f9;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
+        /* Container Styling */
         .container {
-            width: 350px;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            width: 400px;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 2px solid #ff4c4c;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
 
+        /* Header */
         h1 {
+            font-size: 32px;
+            color: #ffeb3b;
             margin-bottom: 20px;
-            color: #333;
+            font-family: "Comic Sans MS", sans-serif;
+            text-shadow: 1px 1px 5px #ff4c4c;
         }
 
+        /* Form Styling */
         .form-group {
             margin-bottom: 15px;
             text-align: left;
         }
 
         label {
-            display: block;
-            margin-bottom: 5px;
-            color: #666;
+            color: #bbb;
+            font-size: 14px;
         }
 
         input[type="text"],
@@ -57,36 +65,43 @@ if (isset($_SESSION['user_id'])) {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid #777;
             border-radius: 5px;
-            box-sizing: border-box;
+            background-color: #222;
+            color: #fff;
             font-size: 16px;
+            box-sizing: border-box;
         }
 
+        /* Button Styling */
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #007bff;
+            padding: 12px;
+            background-color: #ff4c4c;
             border: none;
             border-radius: 5px;
             color: #fff;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #ff1c1c;
         }
 
+        /* Register Link Styling */
         .register-link {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 14px;
-            color: #666;
+            color: #999;
         }
 
         .register-link a {
-            color: #007bff;
+            color: #ffeb3b;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .register-link a:hover {
@@ -96,7 +111,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
     <div class="container">
-        <h1>Login to Mang Store</h1>
+        <h1>141 Manga Store</h1>
         <form action="login.php" method="POST">
             <div class="form-group">
                 <label for="username">Username:</label>

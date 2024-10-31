@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "mang_store";
+$dbname = "manga_store";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
